@@ -1,4 +1,5 @@
 import 'package:blogappfrontend/pages/signup.dart';
+import 'package:blogappfrontend/service/userservice.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatefulWidget {
@@ -9,6 +10,26 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  TextEditingController txt1=new TextEditingController();
+  TextEditingController txt2=new TextEditingController();
+
+  void loginuser() async{
+    final response=await userApiService().login(
+        txt1.text,
+        txt2.text);
+      if(response["status"]=="success")
+        {
+          print("Login Successfull");
+        }
+      else if(response["status"]=="invalid user")
+        {
+          print("invalid userid");
+        }
+      else
+        {
+          print("invalid password");
+        }
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,6 +46,7 @@ class _LoginPageState extends State<LoginPage> {
                   "Email",
                 ),
                 TextField(
+                  controller: txt1,
                   decoration: InputDecoration(
                       hintText: "Enter your eMail",
                       border: OutlineInputBorder(
@@ -36,6 +58,7 @@ class _LoginPageState extends State<LoginPage> {
                   "Password",
                 ),
                 TextField(
+                  controller: txt2,
                   // obscureText: true,
                   decoration: InputDecoration(
                     hintText: "Enter your password",
@@ -60,7 +83,7 @@ class _LoginPageState extends State<LoginPage> {
                   )
                 ),
 
-                  onPressed: (){}, child: Text("Login")),
+                  onPressed: loginuser, child: Text("Login")),
             ),
             SizedBox(height: 80,),
             Row(

@@ -1,3 +1,4 @@
+import 'package:blogappfrontend/service/userservice.dart';
 import 'package:flutter/material.dart';
 
 class SignupPage extends StatefulWidget {
@@ -15,7 +16,27 @@ class _SignupPageState extends State<SignupPage> {
   TextEditingController txt5=new TextEditingController();
   TextEditingController txt6=new TextEditingController();
   TextEditingController txt7=new TextEditingController();
+
+  void sendUserData() async{
+    final response =await userApiService().sendData(
+        txt1.text,
+        txt2.text,
+        txt3.text,
+        txt4.text,
+        txt5.text,
+        txt6.text,
+        txt7.text);
+    if(response["status"]=="success")
+    {
+      print("Successfully added");
+    }
+    else
+    {
+      print("Error");
+    }
+  }
   @override
+
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -42,6 +63,7 @@ class _SignupPageState extends State<SignupPage> {
                 ),
                 SizedBox(height: 10,),
                 TextField(
+                  keyboardType: TextInputType.number,
                   controller: txt2,
                   decoration: InputDecoration(
                       hintText: "Enter Age",
@@ -51,6 +73,7 @@ class _SignupPageState extends State<SignupPage> {
                 ),
                 SizedBox(height: 10,),
                 TextField(
+                  keyboardType: TextInputType.number,
                   controller: txt3,
                   decoration: InputDecoration(
                       hintText: "Enter MobileNo",
@@ -69,6 +92,7 @@ class _SignupPageState extends State<SignupPage> {
                 ),
                 SizedBox(height: 10,),
                 TextField(
+                  keyboardType: TextInputType.number,
                   controller: txt5,
                   decoration: InputDecoration(
                       hintText: "Enter Pincode",
@@ -105,7 +129,7 @@ class _SignupPageState extends State<SignupPage> {
                                 borderRadius: BorderRadius.circular(10)
                             )
                         ),
-                        onPressed: (){},
+                        onPressed: sendUserData,
                         child: Text("Sign Up"))),
                 SizedBox(height: 60,),
                 TextButton(onPressed: (){
